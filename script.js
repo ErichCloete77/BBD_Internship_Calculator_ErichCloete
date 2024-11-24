@@ -37,33 +37,24 @@ document.addEventListener('DOMContentLoaded', function() {
                                      .replace(/cos\(/g, 'Math.cos(')
                                      .replace(/tan\(/g, 'Math.tan(');
 
-        // Validate the expression to prevent code injection
         if (/[^0-9+\-*/().MathPIsincoatanlg\^]/.test(sanitizedExpr)) {
             throw new Error('Invalid characters in expression');
         }
 
-        // Evaluate the expression securely
         return calculate(sanitizedExpr);
     }
 
     function calculate(expr) {
-        // Create a function to evaluate the expression
-        // without using eval() or Function()
         const allowedChars = '0123456789+-*/().MathPI sincos tanlog^';
         for (let char of expr) {
             if (!allowedChars.includes(char)) {
                 throw new Error('Invalid character detected');
             }
         }
-
-        // Implement a basic parser or use existing safe methods
-        // For simplicity, using a safe eval alternative
         return safeEval(expr);
     }
 
     function safeEval(expr) {
-        // A basic implementation of a safe evaluator
-        // Note: This is a simplified version and may not cover all edge cases
         return new Function('"use strict";return (' + expr + ')')();
     }
 });
